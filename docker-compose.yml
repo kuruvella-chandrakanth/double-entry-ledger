@@ -1,0 +1,21 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: ledger-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ledger_root
+      MYSQL_DATABASE: ledger_db
+      MYSQL_USER: ledger_user
+      MYSQL_PASSWORD: ledger_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - ledger_mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pledger_root"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  ledger_mysql_data:
